@@ -17,5 +17,9 @@
   ],
   "author": "Owen C. Jones <owencjones@protonmail.com>",
   "license": "MIT",
-  "homepage": "https://bitbucket.org/seajones/bitbot#readme"
+  "homepage": "https://bitbucket.org/seajones/bitbot#readme",
+  "dependencies": {
+    "koa": "^2.2.0",
+    "lodash": "^4.17.4"
+  }
 }

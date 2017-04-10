@@ -24,7 +24,7 @@ app.use(async function (ctx, next) {
 // response
 
 app.use(ctx => {
-    ctx.body = ctx.request.body;
+    ctx.body = ctx.req.url;
 });
 
 const port = process.env.PORT || 3000;

@@ -1,0 +1,21 @@
+{
+  "name": "bitbot",
+  "version": "1.0.0",
+  "description": "A Slack bot for expressing BitBucket links in a more useful way",
+  "main": "server.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/seajones/bitbot.git"
+  },
+  "keywords": [
+    "Bitbucket",
+    "Bot",
+    "Slack"
+  ],
+  "author": "Owen C. Jones <owencjones@protonmail.com>",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/seajones/bitbot#readme"
+}

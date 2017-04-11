@@ -32,8 +32,18 @@ app.use(ctx => {
     const bitbucketRegex = /^https:\/\/bitbucket.org\/([a-z0-9\-_]+)\/([a-z0-9\-_]+)\/pull-requests\/([0-9]+)/gi
     const bitbucketMatch = inputCommand.match(bitbucketRegex);
 
+    const user = _.get(ctx, 'request.body.username');
+
     if (bitbucketMatch) {
-        ctx.body = `It's a beautiful, bouncing, pull-request! Click <a href="${inputCommand}>here</a> to see it`;
+        const responseObj = {
+            "text": `${user} needs someone to look at a pull request.`,
+            "attachments": [
+                {
+                    "text": `${request.body.text}`
+                }
+            ]
+        };
+        ctx.body = JSON.stringify(responseObj);
     } else {
         ctx.body = 'Sorry, but this wasn\'t recognised.  Either it\'s not a Bitbucket pull request, or @owen sucks at regex';
     }

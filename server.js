@@ -32,7 +32,7 @@ app.use(ctx => {
     const bitbucketRegex = /^https:\/\/bitbucket.org\/([a-z0-9\-_]+)\/([a-z0-9\-_]+)\/pull-requests\/([0-9]+)/gi
     const bitbucketMatch = inputCommand.match(bitbucketRegex);
 
-    const user = _.get(ctx, 'request.body.username');
+    const user = _.get(ctx, 'request.body.user_name');
 
     if (bitbucketMatch) {
         const responseObj = {

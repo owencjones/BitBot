@@ -36,7 +36,7 @@ app.use(ctx => {
 
     if (bitbucketMatch) {
         const responseObj = {
-            "type": "in_channel"
+            "type": "in_channel",
             "text": `${user} needs someone to look at a pull request.`,
             "attachments": [
                 {

@@ -20,6 +20,7 @@
   "homepage": "https://bitbucket.org/seajones/bitbot#readme",
   "dependencies": {
     "koa": "^2.2.0",
+    "koa-bodyparser": "^4.2.0",
     "lodash": "^4.17.4"
   },
   "engines": {

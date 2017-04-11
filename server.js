@@ -2,6 +2,7 @@
 
 const Koa = require('koa');
 const app = new Koa();
+const bodyParser = require('koa-bodyparser');
 
 // x-response-time
 
@@ -23,12 +24,16 @@ app.use(async function (ctx, next) {
 
 // response
 
-app.use(ctx => {
-    const inputCommand = ctx.originalUrl.replace('/', '');
-    const bitbucketRegex = /^https:\/\/bitbucket.org\/([a-z0-9\-_]+)\/([a-z0-9\-_]+)\/pull-requests\/([0-9]+)/gi
-    const bitbucketMatch = inputCommand.match(bitbucketRegex);
+app.use(bodyParser());
 
-    ctx.body = "!" + inputCommand;
+app.use(ctx => {
+    ctx.body = ctx.request.body.text;
+
+    // const inputCommand = ctx.originalUrl.replace('/', '');
+    // const bitbucketRegex = /^https:\/\/bitbucket.org\/([a-z0-9\-_]+)\/([a-z0-9\-_]+)\/pull-requests\/([0-9]+)/gi
+    // const bitbucketMatch = inputCommand.match(bitbucketRegex);
+    //
+    // ctx.body = "!" + inputCommand;
 
     // if (bitbucketMatch) {
     //     ctx.body = `It's a beautiful, bouncing, pull-request! Click <a href="${inputCommand}>here</a> to see it`;

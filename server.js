@@ -39,7 +39,7 @@ app.use(ctx => {
             "text": `${user} needs someone to look at a pull request.`,
             "attachments": [
                 {
-                    "text": `${request.body.text}`
+                    "text": `${inputCommand}`
                 }
             ]
         };

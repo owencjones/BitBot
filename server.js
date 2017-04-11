@@ -24,7 +24,7 @@ app.use(async function (ctx, next) {
 // response
 
 app.use(ctx => {
-    const inputCommand = ctx.url.replace('/', '');
+    const inputCommand = ctx.originalUrl.replace('/', '');
     const bitbucketRegex = /^https:\/\/bitbucket.org\/([a-z0-9\-_]+)\/([a-z0-9\-_]+)\/pull-requests\/([0-9]+)/gi
     const bitbucketMatch = inputCommand.match(bitbucketRegex);
 

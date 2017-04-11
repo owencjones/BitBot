@@ -43,7 +43,7 @@ app.use(ctx => {
                 }
             ]
         };
-        ctx.body = JSON.stringify(responseObj);
+        ctx.body = responseObj;
     } else {
         ctx.body = 'Sorry, but this wasn\'t recognised.  Either it\'s not a Bitbucket pull request, or @owen sucks at regex';
     }

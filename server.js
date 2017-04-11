@@ -27,19 +27,15 @@ app.use(async function (ctx, next) {
 app.use(bodyParser());
 
 app.use(ctx => {
-    ctx.body = ctx.request.body.text;
+    const inputCommand = ctx.body.request.text;
+    const bitbucketRegex = /^https:\/\/bitbucket.org\/([a-z0-9\-_]+)\/([a-z0-9\-_]+)\/pull-requests\/([0-9]+)/gi
+    const bitbucketMatch = inputCommand.match(bitbucketRegex);
 
-    // const inputCommand = ctx.originalUrl.replace('/', '');
-    // const bitbucketRegex = /^https:\/\/bitbucket.org\/([a-z0-9\-_]+)\/([a-z0-9\-_]+)\/pull-requests\/([0-9]+)/gi
-    // const bitbucketMatch = inputCommand.match(bitbucketRegex);
-    //
-    // ctx.body = "!" + inputCommand;
-
-    // if (bitbucketMatch) {
-    //     ctx.body = `It's a beautiful, bouncing, pull-request! Click <a href="${inputCommand}>here</a> to see it`;
-    // } else {
-    //     ctx.body = 'Sorry, but this wasn\'t recongised.  Either it\'s not a Bitbucket pull request, or @owen sucks at regex';
-    // }
+    if (bitbucketMatch) {
+        ctx.body = `It's a beautiful, bouncing, pull-request! Click <a href="${inputCommand}>here</a> to see it`;
+    } else {
+        ctx.body = 'Sorry, but this wasn\'t recognised.  Either it\'s not a Bitbucket pull request, or @owen sucks at regex';
+    }
 });
 
 const port = process.env.PORT || 3000;

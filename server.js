@@ -1,55 +1,32 @@
+/* jshint node:true */
 'use strict';
-
 const _ = require('lodash');
-const Koa = require('koa');
-const app = new Koa();
-const bodyParser = require('koa-bodyparser');
+const express = require('express');
+const bodyParser = require('body-parser');
+const config = require('./config/default.js');
+const winston = require('winston');
 
-// x-response-time
+const logger = new (winston.Logger)({
+   transports: [
+       new (winston.transports.Console)(),
+       new (winston.transports.File)({ filename: 'logs/events.log'})
+   ]
+});
+const app = express();
 
-app.use(async function (ctx, next) {
-    const start = new Date();
-    await next();
-    const ms = new Date() - start;
-    ctx.set('X-Response-Time', `${ms}ms`);
+app.locals.config = config;
+app.locals.logger = logger;
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+require('./routes/allRoutes.js')(app);
+
+app.use((request, response) => {
+    response.sendStatus(400);
 });
 
-// logger
-
-app.use(async function (ctx, next) {
-    const start = new Date();
-    await next();
-    const ms = new Date() - start;
-    console.log(`${ctx.method} ${ctx.url} - ${ms}`);
-});
-
-// response
-
-app.use(bodyParser());
-
-app.use(ctx => {
-    const inputCommand = _.get(ctx, 'request.body.text', '');
-    const bitbucketRegex = /^https:\/\/bitbucket.org\/([a-z0-9\-_]+)\/([a-z0-9\-_]+)\/pull-requests\/([0-9]+)/gi
-    const bitbucketMatch = inputCommand.match(bitbucketRegex);
-
-    const user = _.get(ctx, 'request.body.user_name');
-
-    if (bitbucketMatch) {
-        const responseObj = {
-            "response_type": "in_channel",
-            "text": `${user} needs someone to look at a pull request.`,
-            "attachments": [
-                {
-                    "text": `${inputCommand}`
-                }
-            ]
-        };
-        ctx.body = responseObj;
-    } else {
-        ctx.body = 'Sorry, but this wasn\'t recognised.  Either it\'s not a Bitbucket pull request, or @owen sucks at regex';
-    }
-});
-
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || config.listenPort || 3000;
+app.locals.port = port;
 
 app.listen(port);
+logger.info (`BitBot listening on port ${port}`);
